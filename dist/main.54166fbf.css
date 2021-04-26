@@ -39,15 +39,6 @@
   font-size: 12px;
 }
 
-.book-info-block {
-  flex: 1 1 100%;
-}
-
-.book-info {
-  padding: 5px 0px;
-  border: 1px solid grey;
-}
-
 .prev-btn-hide {
   display: none;
 }
@@ -62,6 +53,16 @@
 
 .next-btn-show {
   display: "";
+}
+
+.book-info-block {
+  flex: 1 1 100%;
+  position: sticky;
+}
+
+.book-info {
+  padding: 5px 0px;
+  border: 1px solid grey;
 }
 
 .to-read-block {

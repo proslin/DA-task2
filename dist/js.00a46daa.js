@@ -1007,10 +1007,29 @@ var ToReadUI = /*#__PURE__*/function () {
       ToReadUI.renderHeaderReadList();
       var readList = document.getElementById("readListList");
       var readBooksHTML = booksList.reduce(function (acc, item) {
-        if (item.read) {
-          return acc + "\n       <div id=\"".concat(item.id, "\" class=\"read-list-item mark-as-read\"> \n       <h3 id =\"toRead\" class=\"read-book-info\">").concat(item.title, "</h3>\n        <p>").concat(item.subtitle, "</p>\n        <p>").concat(item.author_name[0], "</p>\n        </div>\n        ");
+        var authorName = "";
+
+        if (!item.author_name) {
+          authorName = "no info about author";
         } else {
-          return acc + "\n            <div class=\"read-list-item\"> \n            <h3 id =\"toRead\" class=\"read-book-info\">".concat(item.title, "</h3>\n             <p>").concat(item.subtitle, "</p>\n             <p>").concat(item.author_name[0], "</p>\n             <button id=\"markAsReadBtn/").concat(item.id, "\" class=\"read-list-btn\">Mark as read</button>\n             <button id=\"RemoveFromListBtn/").concat(item.id, "\" class=\"read-list-btn\">Remove from list</button>\n             </div>\n             ");
+          authorName = item.author_name[0];
+        }
+
+        ;
+        var language = "";
+
+        if (!item.language) {
+          language = "";
+        } else {
+          language = item.language[0];
+        }
+
+        ;
+
+        if (item.read) {
+          return acc + "\n       <div id=\"".concat(item.id, "\" class=\"read-list-item mark-as-read\"> \n       <h3 id =\"toRead\" class=\"read-book-info\">").concat(item.title, "(").concat(language, ")</h3>\n        <p>").concat(item.subtitle || "", "</p>\n        <p>").concat(authorName, "</p>\n        </div>\n        ");
+        } else {
+          return acc + "\n            <div class=\"read-list-item\"> \n            <h3 id =\"toRead\" class=\"read-book-info\">".concat(item.title, "(").concat(language, ")</h3>\n             <p>").concat(item.subtitle || "", "</p>\n             <p>").concat(authorName, "</p>\n             <button id=\"markAsReadBtn/").concat(item.id, "\" class=\"read-list-btn\">Mark as read</button>\n             <button id=\"RemoveFromListBtn/").concat(item.id, "\" class=\"read-list-btn\">Remove from list</button>\n             </div>\n             ");
         }
       }, "");
       readList.innerHTML = readBooksHTML;
@@ -1090,49 +1109,70 @@ var BooksUI = /*#__PURE__*/function () {
 
     _defineProperty(this, "bookInfoHolder", void 0);
 
+    _defineProperty(this, "pageNum", 1);
+
     this.searchResultHolder = document.getElementById("searchResultHolder");
     this.bookInfoHolder = document.getElementById("bookInfoHolder");
     this.footerInfo = document.getElementById("searchBlockFooterInfo");
     this.footerPagination = document.getElementById("searchBlockFooterPagination");
     this.prevBtn = document.getElementById("prevBtn");
     this.nextBtn = document.getElementById("nextBtn");
+    this.pageNum = 1;
     var searchInput = document.getElementById("searchInput");
     var goButton = document.getElementById("goButton");
+    var elem = this;
+
+    var nextBtnFunc = function nextBtnFunc() {
+      var querry = searchInput.value;
+      elem.pageNum = String(parseInt(elem.pageNum) + 1);
+      api.search(querry, elem.pageNum).then(function (nextPage) {
+        elem.processSearchResult(nextPage);
+        elem.footerInfo.innerHTML = elem.renderColumnFooter(nextPage);
+        elem.prevBtn.className = "prev-btn-show";
+        var pagesCount = Math.trunc(nextPage.numFound / 100);
+        var currentPage = nextPage.start / 100;
+
+        if (pagesCount == currentPage) {
+          elem.nextBtn.className = "next-btn-hide";
+        } else {
+          elem.nextBtn.className = "next-btn-show";
+        }
+      });
+    };
+
+    nextBtn.addEventListener("click", nextBtnFunc);
+
+    var prevBtnFunc = function prevBtnFunc() {
+      var querry = searchInput.value;
+      elem.pageNum = String(parseInt(elem.pageNum) - 1);
+      api.search(querry, elem.pageNum).then(function (prevPage) {
+        elem.processSearchResult(prevPage);
+        elem.footerInfo.innerHTML = elem.renderColumnFooter(prevPage);
+
+        if (elem.pageNum == "1") {
+          elem.prevBtn.className = "prev-btn-hide";
+        } else {
+          elem.prevBtn.className = "prev-btn-show";
+        }
+
+        elem.nextBtn.className = "next-btn-show";
+      });
+    };
+
+    prevBtn.addEventListener("click", prevBtnFunc);
     goButton.addEventListener("click", function () {
       var querry = searchInput.value;
+      _this.pageNum = 1;
 
       if (!querry) {
         return;
       }
 
-      api.search(querry).then(function (page) {
+      api.search(querry, String(_this.pageNum)).then(function (page) {
         _this.processSearchResult(page);
 
-        console.log(api);
-        console.log(page);
-        console.log(_this);
-        _this.footerInfo.innerHTML = "\n                <span>Found: ".concat(page.numFound, "</span>\n                <span>Start: ").concat(page.start, "</span>\n                <span>Page size: ").concat(page.docs.length, "</span>\n                "); //сделать кнопки видимыми прев некст
-
-        _this.nextBtn.className = "next-btn-show "; //this.nextBtn = document.getElementById("nextBtn");
-
-        nextBtn.addEventListener("click", function (event) {
-          console.log(_this);
-          console.log(page);
-          var nextPage = page.start + 100;
-          var pageNum = String(nextPage / 100 + 1);
-          console.log(page.start);
-          api.search(querry, pageNum).then(function (nextpage) {
-            _this.processSearchResult(nextpage);
-
-            console.log(api);
-            console.log(nextpage);
-            console.log(_this);
-            _this.footerInfo.innerHTML = "\n                    <span>Found: ".concat(nextpage.numFound, "</span>\n                    <span>Start: ").concat(nextpage.start, "</span>\n                    <span>Page size: ").concat(nextpage.docs.length, "</span>\n                    "); //сделать кнопки видимыми прев некст
-
-            _this.prevBtn.className = "prev-btn-show";
-            _this.nextBtn.className = "next-btn-show ";
-          });
-        });
+        _this.footerInfo.innerHTML = _this.renderColumnFooter(page);
+        _this.nextBtn.className = "next-btn-show";
       });
     });
     searchInput.addEventListener("keyup", function (event) {
@@ -1164,13 +1204,28 @@ var BooksUI = /*#__PURE__*/function () {
 
       _this.selectedBook = selectedBook;
       targetDiv.classList.add("select-book");
-      _this.bookInfoHolder.innerHTML = "\n          <h2>".concat(selectedBook.title, "</h2>\n          <div>").concat(selectedBook.subtitle, "</div>\n          <div>Languages available: ").concat(selectedBook.language.join(", "), "</div>\n          <div>Full text available: ").concat(selectedBook.has_fulltext, "</div>\n          <div>First publish year: ").concat(selectedBook.first_publish_year, "</div>\n          <div>Years published: ").concat(selectedBook.publish_year.join(", "), "</div>\n          <button id=\"toReadListBtn\">Add book to Read List</button>          \n          ");
+      var bookLanguages = "";
+      var bookAuthor = "";
+
+      if (!selectedBook.language) {
+        bookLanguages = "no info about language";
+      } else {
+        bookLanguages = selectedBook.language.join(", ");
+      }
+
+      if (!selectedBook.author_name) {
+        bookAuthor = "no info about author";
+      } else {
+        bookAuthor = selectedBook.author_name[0];
+      }
+
+      _this.bookInfoHolder.innerHTML = "\n          <h2>".concat(selectedBook.title, "</h2>\n          <div>").concat(selectedBook.subtitle || "", "</div>\n          <div>").concat(bookAuthor, "</div>\n          <div>Languages available: ").concat(bookLanguages, "</div>\n          <div>Full text available: ").concat(selectedBook.has_fulltext, "</div>\n          <div>First publish year: ").concat(selectedBook.first_publish_year, "</div>\n          <div>Years published: ").concat(selectedBook.publish_year.join(", "), "</div>\n          <button id=\"toReadListBtn\">Add book to Read List</button>          \n          ");
       var addToReadListBtn = document.getElementById("toReadListBtn");
       addToReadListBtn.addEventListener("click", function (event) {
         var selectedBooksList = _toRead.ToReadUI.getFromLocalStorage();
 
         selectedBook.read = false;
-        selectedBooksList.push(selectedBook); //ToReadUI.setToLocalStorage(selectedBooksList);
+        selectedBooksList.push(selectedBook);
 
         _toRead.ToReadUI.addNewBookToLocalStorage(selectedBook);
 
@@ -1193,6 +1248,11 @@ var BooksUI = /*#__PURE__*/function () {
         return acc + "\n          <div id =\"".concat(item.id, "\" class=\"book-info\">").concat(item.title, "</div>\n          ");
       }, "");
       this.searchResultHolder.innerHTML = booksHTML;
+    }
+  }, {
+    key: "renderColumnFooter",
+    value: function renderColumnFooter(page) {
+      return "\n        <span>Found: ".concat(page.numFound, "</span>\n        <span>Start: ").concat(page.start, "</span>\n        <span>Page size: ").concat(page.docs.length, "</span>\n        ");
     }
   }]);
 

@@ -1,5 +1,6 @@
 .book-info-block {
     flex: 1 1 100%;
+    position:sticky;
 }
 
 .book-info {
@@ -7,16 +8,3 @@
     border: 1px solid grey;
 }
 
-.prev-btn-hide {
-    display: none;
-}
-
-.prev-btn-show {
-    display: "";
-}
-.next-btn-hide {
-    display: none;
-}
-.next-btn-show {
-    display: "";
-}

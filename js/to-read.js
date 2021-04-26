@@ -52,15 +52,26 @@ export class ToReadUI {
     ToReadUI.renderHeaderReadList()
     const readList = document.getElementById("readListList");     
        const readBooksHTML = booksList.reduce((acc, item) => {
-       
+       let authorName = "";
+       if (!item.author_name) {
+        authorName = "no info about author";
+       } else {
+        authorName = item.author_name[0];
+       };
+       let language = "";
+       if (!item.language) {
+        language = "";
+       } else {
+        language = item.language[0];
+       };
        if (item.read) {
          return (
        acc + 
        `
        <div id="${item.id}" class="read-list-item mark-as-read"> 
-       <h3 id ="toRead" class="read-book-info">${item.title}</h3>
-        <p>${item.subtitle}</p>
-        <p>${item.author_name[0]}</p>
+       <h3 id ="toRead" class="read-book-info">${item.title}(${language})</h3>
+        <p>${item.subtitle || ""}</p>
+        <p>${authorName}</p>
         </div>
         `
         );
@@ -69,9 +80,9 @@ export class ToReadUI {
             acc + 
             `
             <div class="read-list-item"> 
-            <h3 id ="toRead" class="read-book-info">${item.title}</h3>
-             <p>${item.subtitle}</p>
-             <p>${item.author_name[0]}</p>
+            <h3 id ="toRead" class="read-book-info">${item.title}(${language})</h3>
+             <p>${item.subtitle || ""}</p>
+             <p>${authorName}</p>
              <button id="markAsReadBtn/${item.id}" class="read-list-btn">Mark as read</button>
              <button id="RemoveFromListBtn/${item.id}" class="read-list-btn">Remove from list</button>
              </div>
