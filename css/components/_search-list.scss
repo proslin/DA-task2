@@ -1,36 +1,60 @@
 .search-block {
-    flex: 0 1 400px;
+    flex: 0 1 390px;
     position: relative;
-    height: 100vp;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: visible;
 }
 
 .search-input {
-    width: 120px;
-    padding: 5px;
+    font-size: 24px;
+    padding-left: 13px;
+    margin-right: 19px;
+    //width: 120px;
+   // padding: 5px;
+}
+
+.go-button {
+    width: 95px;
+    color: #FFFFFF;
+    background-color: rgb(58, 66, 52);
+    line-height: 39px;
 }
 
 .search-block-header {
     background-color: rgb(223, 223, 188);
-  height: 50px; //заменить потом паддингами
+  padding: 30px;
+  width: 390px;
   font-size: 24px;
-  padding: 5px;
   margin: 0 auto;
   position:sticky;
   top: 0;
+  flex: 0 0 auto;
 }
 
 .search-block-result {    
-    overflow-y: scroll;
+    
+    flex: 1 0 auto;
 }
 
 .select-book {
     background-color: grey;
+    font-weight: 900;
 }
 
 .search-block-footer {
+    background-color: rgb(223, 223, 188);
     position:sticky;
     bottom: 0;
     font-size: 12px;
+    flex: 0 0 auto;
+    padding: 10px 0px 14px 24px;
+}
+
+.search-block-footer-info {
+    margin-bottom: 5px;
 }
 
 .prev-btn-hide {
@@ -39,10 +63,16 @@
 
 .prev-btn-show {
     display: "";
+    border: none;
+background-color: rgb(223, 223, 188);;
+color: #0000FF;
 }
 .next-btn-hide {
     display: none;
 }
 .next-btn-show {
     display: "";
+    border: none;
+background-color: rgb(223, 223, 188);;
+color: #0000FF;
 }

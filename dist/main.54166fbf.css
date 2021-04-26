@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -5,38 +6,59 @@
 }
 
 .search-block {
-  flex: 0 1 400px;
+  flex: 0 1 390px;
   position: relative;
-  height: 100vp;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: visible;
 }
 
 .search-input {
-  width: 120px;
-  padding: 5px;
+  font-size: 24px;
+  padding-left: 13px;
+  margin-right: 19px;
+}
+
+.go-button {
+  width: 95px;
+  color: #FFFFFF;
+  background-color: #3a4234;
+  line-height: 39px;
 }
 
 .search-block-header {
   background-color: #dfdfbc;
-  height: 50px;
+  padding: 30px;
+  width: 390px;
   font-size: 24px;
-  padding: 5px;
   margin: 0 auto;
   position: sticky;
   top: 0;
+  flex: 0 0 auto;
 }
 
 .search-block-result {
-  overflow-y: scroll;
+  flex: 1 0 auto;
 }
 
 .select-book {
   background-color: grey;
+  font-weight: 900;
 }
 
 .search-block-footer {
+  background-color: #dfdfbc;
   position: sticky;
   bottom: 0;
   font-size: 12px;
+  flex: 0 0 auto;
+  padding: 10px 0px 14px 24px;
+}
+
+.search-block-footer-info {
+  margin-bottom: 5px;
 }
 
 .prev-btn-hide {
@@ -45,6 +67,9 @@
 
 .prev-btn-show {
   display: "";
+  border: none;
+  background-color: #dfdfbc;
+  color: #0000FF;
 }
 
 .next-btn-hide {
@@ -53,6 +78,9 @@
 
 .next-btn-show {
   display: "";
+  border: none;
+  background-color: #dfdfbc;
+  color: #0000FF;
 }
 
 .book-info-block {
@@ -65,20 +93,46 @@
   border: 1px solid grey;
 }
 
+.selected-book-title {
+  font-size: 36px;
+  line-height: 42px;
+}
+
+.selected-book-subtitle {
+  font-size: 18px;
+  line-height: 21px;
+  color: #ABABAB;
+  margin-bottom: 37px;
+}
+
+.toread-list-btn {
+  margin-top: 30px;
+  font-size: 24px;
+  line-height: 28px;
+  border: none;
+  background-color: #fff;
+  color: #0000FF;
+}
+
 .to-read-block {
-  flex: 0 1 400px;
+  flex: 0 1 390px;
 }
 
 .read-list-header {
   background-color: #dfdfbc;
-  height: 50px;
-  font-size: 24px;
+  font-size: 36px;
+  line-height: 42px;
+  padding-top: 21px;
+  padding-left: 24px;
   position: sticky;
   top: 0;
 }
 
 .read-list-item {
+  font-size: 24px;
+  line-height: 28px;
   border: 1px solid grey;
+  padding: 24px 0px 23px 24px;
 }
 
 .mark-as-read {
@@ -87,16 +141,50 @@
 
 .books-count {
   font-size: 12px;
+  line-height: 21px;
+  padding-bottom: 13px;
   color: grey;
 }
 
-.search-block-footer {
-  background-color: #dfdfbc;
-  height: 30px;
+.read-book-info {
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.read-book-subtitle {
+  font-size: 18px;
+  line-height: 21px;
+  color: #ABABAB;
+}
+
+.read-list-btn {
+  font-size: 18px;
+  line-height: 21px;
+  background-color: #fff;
+  border: none;
+  color: #0000FF;
 }
 
 .app-holder {
+  height: 100%;
+}
+
+body, html {
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+}
+
+.container {
+  width: 1442px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.app-block {
   display: flex;
+  height: 100%;
 }
 
 /*# sourceMappingURL=/main.54166fbf.css.map */

@@ -70,7 +70,7 @@ export class ToReadUI {
        `
        <div id="${item.id}" class="read-list-item mark-as-read"> 
        <h3 id ="toRead" class="read-book-info">${item.title}(${language})</h3>
-        <p>${item.subtitle || ""}</p>
+        <p class="read-book-subtitle">${item.subtitle || ""}</p>
         <p>${authorName}</p>
         </div>
         `

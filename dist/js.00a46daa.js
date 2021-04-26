@@ -1027,7 +1027,7 @@ var ToReadUI = /*#__PURE__*/function () {
         ;
 
         if (item.read) {
-          return acc + "\n       <div id=\"".concat(item.id, "\" class=\"read-list-item mark-as-read\"> \n       <h3 id =\"toRead\" class=\"read-book-info\">").concat(item.title, "(").concat(language, ")</h3>\n        <p>").concat(item.subtitle || "", "</p>\n        <p>").concat(authorName, "</p>\n        </div>\n        ");
+          return acc + "\n       <div id=\"".concat(item.id, "\" class=\"read-list-item mark-as-read\"> \n       <h3 id =\"toRead\" class=\"read-book-info\">").concat(item.title, "(").concat(language, ")</h3>\n        <p class=\"read-book-subtitle\">").concat(item.subtitle || "", "</p>\n        <p>").concat(authorName, "</p>\n        </div>\n        ");
         } else {
           return acc + "\n            <div class=\"read-list-item\"> \n            <h3 id =\"toRead\" class=\"read-book-info\">".concat(item.title, "(").concat(language, ")</h3>\n             <p>").concat(item.subtitle || "", "</p>\n             <p>").concat(authorName, "</p>\n             <button id=\"markAsReadBtn/").concat(item.id, "\" class=\"read-list-btn\">Mark as read</button>\n             <button id=\"RemoveFromListBtn/").concat(item.id, "\" class=\"read-list-btn\">Remove from list</button>\n             </div>\n             ");
         }
@@ -1219,7 +1219,7 @@ var BooksUI = /*#__PURE__*/function () {
         bookAuthor = selectedBook.author_name[0];
       }
 
-      _this.bookInfoHolder.innerHTML = "\n          <h2>".concat(selectedBook.title, "</h2>\n          <div>").concat(selectedBook.subtitle || "", "</div>\n          <div>").concat(bookAuthor, "</div>\n          <div>Languages available: ").concat(bookLanguages, "</div>\n          <div>Full text available: ").concat(selectedBook.has_fulltext, "</div>\n          <div>First publish year: ").concat(selectedBook.first_publish_year, "</div>\n          <div>Years published: ").concat(selectedBook.publish_year.join(", "), "</div>\n          <button id=\"toReadListBtn\">Add book to Read List</button>          \n          ");
+      _this.bookInfoHolder.innerHTML = "\n          <h2 class=\"selected-book-title\">".concat(selectedBook.title, "</h2>\n          <div class=\"selected-book-subtitle\">").concat(selectedBook.subtitle || "", "</div>\n          <div>").concat(bookAuthor, "</div>\n          <div>Languages available: ").concat(bookLanguages, "</div>\n          <div>Full text available: ").concat(selectedBook.has_fulltext, "</div>\n          <div>First publish year: ").concat(selectedBook.first_publish_year, "</div>\n          <div>Years published: ").concat(selectedBook.publish_year.join(", "), "</div>\n          <button id=\"toReadListBtn\" class=\"toread-list-btn\">Add book to Read List</button>          \n          ");
       var addToReadListBtn = document.getElementById("toReadListBtn");
       addToReadListBtn.addEventListener("click", function (event) {
         var selectedBooksList = _toRead.ToReadUI.getFromLocalStorage();
@@ -1245,7 +1245,13 @@ var BooksUI = /*#__PURE__*/function () {
       });
       this.currentPage = page.docs;
       var booksHTML = page.docs.reduce(function (acc, item) {
-        return acc + "\n          <div id =\"".concat(item.id, "\" class=\"book-info\">").concat(item.title, "</div>\n          ");
+        var bookLanguage = "";
+
+        if (item.language) {
+          bookLanguage = item.language[0];
+        }
+
+        return acc + "\n          <div id =\"".concat(item.id, "\" class=\"book-info\">").concat(item.title, "(").concat(bookLanguage, ")</div>\n          ");
       }, "");
       this.searchResultHolder.innerHTML = booksHTML;
     }

@@ -1,17 +1,24 @@
 .to-read-block {
-    flex: 0 1 400px;
+    flex: 0 1 390px;
 }
 
 .read-list-header {
   background-color: rgb(223, 223, 188);
-  height: 50px; //заменить потом паддингами
-  font-size: 24px;
+  //height: 96px; //заменить потом паддингами
+  font-size: 36px;
+  line-height: 42px;
+  padding-top: 21px;
+  padding-left: 24px;
   position: sticky;
   top: 0;
 }
 
 .read-list-item {
-    border: 1px solid grey;
+  font-size: 24px;
+line-height: 28px;  
+  border: 1px solid grey;
+  
+  padding:24px 0px 23px 24px;
 }
 
 .mark-as-read {
@@ -20,10 +27,27 @@
 
 .books-count {
   font-size: 12px;
+  line-height: 21px;
+  padding-bottom: 13px;
   color: grey;
 }
-
-.search-block-footer {
-  background-color: rgb(223, 223, 188);
-  height: 30px;
+.read-book-info {
+  font-weight: normal;
+  font-size: 24px;
+line-height: 28px;
 }
+.read-book-subtitle {
+  font-size: 18px;
+line-height: 21px;
+color: #ABABAB;
+}
+
+.read-list-btn {
+  font-size: 18px;
+line-height: 21px;
+background-color: #fff;
+border: none;
+color: #0000FF;
+
+}
+

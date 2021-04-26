@@ -105,14 +105,14 @@ export class BooksUI {
             }
             
             this.bookInfoHolder.innerHTML = `
-          <h2>${selectedBook.title}</h2>
-          <div>${selectedBook.subtitle || ""}</div>
+          <h2 class="selected-book-title">${selectedBook.title}</h2>
+          <div class="selected-book-subtitle">${selectedBook.subtitle || ""}</div>
           <div>${bookAuthor}</div>
           <div>Languages available: ${bookLanguages}</div>
           <div>Full text available: ${selectedBook.has_fulltext}</div>
           <div>First publish year: ${selectedBook.first_publish_year}</div>
           <div>Years published: ${selectedBook.publish_year.join(", ")}</div>
-          <button id="toReadListBtn">Add book to Read List</button>          
+          <button id="toReadListBtn" class="toread-list-btn">Add book to Read List</button>          
           `;
 
             const addToReadListBtn = document.getElementById("toReadListBtn");
@@ -140,10 +140,14 @@ export class BooksUI {
         this.currentPage = page.docs;
 
         const booksHTML = page.docs.reduce((acc, item) => {
+            let bookLanguage = "";
+            if (item.language) {
+                bookLanguage = item.language[0]; 
+            }
             return (
                 acc +
                 `
-          <div id ="${item.id}" class="book-info">${item.title}</div>
+          <div id ="${item.id}" class="book-info">${item.title}(${bookLanguage})</div>
           `
             );
         }, "");
