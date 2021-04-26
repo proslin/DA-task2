@@ -1,0 +1,34 @@
+.search-block {
+    flex: 0 1 400px;
+    position: relative;
+    height: 100vp;
+}
+
+.search-input {
+    width: 120px;
+    padding: 5px;
+}
+
+.search-block-header {
+    background-color: rgb(223, 223, 188);
+  height: 50px; //заменить потом паддингами
+  font-size: 24px;
+  padding: 5px;
+  margin: 0 auto;
+  position:sticky;
+  top: 0;
+}
+
+.search-block-result {    
+    overflow-y: scroll;
+}
+
+.select-book {
+    background-color: grey;
+}
+
+.search-block-footer {
+    position:sticky;
+    bottom: 0;
+    font-size: 12px;
+}
