@@ -1,18 +1,29 @@
 .search-block {
-    flex: 0 1 390px;
+    flex: 0 0 394px;
+   // min-width: 390px;
     position: relative;
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    overflow-x: visible;
+    //overflow-x: visible;
 }
+
+.search-block::-webkit-scrollbar {
+    background-color: transparent;
+    //width: 8px;
+  }
+  
+  //.search-block::-webkit-scrollbar-thumb {
+  //  background-color: #dfe1e5;;
+  //  border-radius: 5px;
+  //}
+  
 
 .search-input {
     font-size: 24px;
-    padding-left: 13px;
     margin-right: 19px;
-    //width: 120px;
+    width: 223px;
    // padding: 5px;
 }
 
@@ -25,8 +36,9 @@
 
 .search-block-header {
     background-color: rgb(223, 223, 188);
-  padding: 30px;
-  width: 390px;
+  padding: 30px 2px 30px 30px;
+  box-sizing:border-box;
+  //width: 390px;
   font-size: 24px;
   margin: 0 auto;
   position:sticky;
@@ -37,6 +49,7 @@
 .search-block-result {    
     
     flex: 1 0 auto;
+    width: 100%;
 }
 
 .select-book {
@@ -66,6 +79,8 @@
     border: none;
 background-color: rgb(223, 223, 188);;
 color: #0000FF;
+margin-right: 18px;
+
 }
 .next-btn-hide {
     display: none;
@@ -75,4 +90,5 @@ color: #0000FF;
     border: none;
 background-color: rgb(223, 223, 188);;
 color: #0000FF;
+
 }

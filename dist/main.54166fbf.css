@@ -6,19 +6,22 @@
 }
 
 .search-block {
-  flex: 0 1 390px;
+  flex: 0 0 394px;
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  overflow-x: visible;
+}
+
+.search-block::-webkit-scrollbar {
+  background-color: transparent;
 }
 
 .search-input {
   font-size: 24px;
-  padding-left: 13px;
   margin-right: 19px;
+  width: 223px;
 }
 
 .go-button {
@@ -30,8 +33,8 @@
 
 .search-block-header {
   background-color: #dfdfbc;
-  padding: 30px;
-  width: 390px;
+  padding: 30px 2px 30px 30px;
+  box-sizing: border-box;
   font-size: 24px;
   margin: 0 auto;
   position: sticky;
@@ -41,6 +44,7 @@
 
 .search-block-result {
   flex: 1 0 auto;
+  width: 100%;
 }
 
 .select-book {
@@ -70,6 +74,7 @@
   border: none;
   background-color: #dfdfbc;
   color: #0000FF;
+  margin-right: 18px;
 }
 
 .next-btn-hide {
@@ -84,7 +89,7 @@
 }
 
 .book-info-block {
-  flex: 1 1 100%;
+  flex: 1 1 auto;
   position: sticky;
 }
 
@@ -115,7 +120,8 @@
 }
 
 .to-read-block {
-  flex: 0 1 390px;
+  flex: 0 0 390px;
+  min-width: 390px;
 }
 
 .read-list-header {

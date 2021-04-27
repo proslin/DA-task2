@@ -81,7 +81,7 @@ export class ToReadUI {
             `
             <div class="read-list-item"> 
             <h3 id ="toRead" class="read-book-info">${item.title}(${language})</h3>
-             <p>${item.subtitle || ""}</p>
+             <p class="read-book-subtitle">${item.subtitle || ""}</p>
              <p>${authorName}</p>
              <button id="markAsReadBtn/${item.id}" class="read-list-btn">Mark as read</button>
              <button id="RemoveFromListBtn/${item.id}" class="read-list-btn">Remove from list</button>

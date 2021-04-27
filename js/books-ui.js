@@ -32,7 +32,8 @@ export class BooksUI {
                if (pagesCount == currentPage) {
                 elem.nextBtn.className = "next-btn-hide";
             } else {elem.nextBtn.className = "next-btn-show";}
-            });            
+            });  
+            elem.checkSelectedBook(elem);          
         }        
         nextBtn.addEventListener("click", nextBtnFunc);
 
@@ -49,8 +50,10 @@ export class BooksUI {
                   }
                   elem.nextBtn.className = "next-btn-show";                      
         });
+        elem.checkSelectedBook(elem); 
       }
         prevBtn.addEventListener("click", prevBtnFunc);
+
         goButton.addEventListener("click", () => {
             const querry = searchInput.value;
             this.pageNum = 1;
@@ -63,7 +66,8 @@ export class BooksUI {
                 this.nextBtn.className = "next-btn-show";                 
             });           
            
-            
+            this.checkSelectedBook(this);
+            this.bookInfoHolder.innerHTML = "";
             
         });
 
@@ -80,8 +84,8 @@ export class BooksUI {
             const targetDiv = event.target;
             const id = targetDiv.id;
             const selectedBook = this.currentPage.find(item => item.id === id);
-           // console.log(selectedBook);
-            if (!selectedBook) {
+            
+             if (!selectedBook) {
                 return;
             }
 
@@ -92,9 +96,11 @@ export class BooksUI {
                 selectedBook.classList.remove("select-book");
             }
             this.selectedBook = selectedBook;
-            targetDiv.classList.add("select-book");
+            targetDiv.classList.add("select-book"); 
             let bookLanguages = "";
             let bookAuthor = "";
+            let publishYear = "";
+            let firstPublishYear = "";
             if (!selectedBook.language) {
                 bookLanguages = "no info about language";
             } else {bookLanguages = selectedBook.language.join(", ");}
@@ -103,15 +109,19 @@ export class BooksUI {
             } else {
                 bookAuthor = selectedBook.author_name[0]; 
             }
-            
+            if (!selectedBook.publish_year) {
+                publishYear = "no info about publish years";
+            } else {publishYear = selectedBook.publish_year.join(", ");}
+            if (!selectedBook.first_publish_year) {firstPublishYear = "no info about publish year";
+        } else {firstPublishYear = selectedBook.first_publish_year;}
             this.bookInfoHolder.innerHTML = `
           <h2 class="selected-book-title">${selectedBook.title}</h2>
           <div class="selected-book-subtitle">${selectedBook.subtitle || ""}</div>
           <div>${bookAuthor}</div>
           <div>Languages available: ${bookLanguages}</div>
           <div>Full text available: ${selectedBook.has_fulltext}</div>
-          <div>First publish year: ${selectedBook.first_publish_year}</div>
-          <div>Years published: ${selectedBook.publish_year.join(", ")}</div>
+          <div>First publish year: ${firstPublishYear}</div>
+          <div>Years published: ${publishYear}</div>
           <button id="toReadListBtn" class="toread-list-btn">Add book to Read List</button>          
           `;
 
@@ -161,6 +171,15 @@ export class BooksUI {
         <span>Page size: ${page.docs.length}</span>
         `;
     }
-
+    
+    checkSelectedBook(book) {
+        if (book.selectedBook) {
+            const selectedBook = book.searchResultHolder.querySelector(
+                "#" + book.selectedBook.id
+            );
+            selectedBook.classList.remove("select-book");
+            delete book.selectedBook; 
+           } 
+    }
     
 }
